@@ -1,6 +1,16 @@
 function [newParentPopIdxs, newParentPop, distances] = getCrowdingDistances(obj, lastFrontIdx, newPopIdxs)
     newParentPopIdxs = [];
     distances = [];
+    fmax = zeros(1,obj.problem.m);
+    fmin = zeros(1,obj.problem.m);
+    %get fmax_m and fmin_m
+    %fmax and fmin can be set as the population-maximum and
+    %population-minimum of the mth obj function value
+    for m = 1:obj.problem.m
+        sortedVals = sort(obj.Rt(:,m),'descend');
+        fmax(m) = sortedVals(1);
+        fmin(m) = sortedVals(2*obj.N);
+    end
     for f = 1:lastFrontIdx %loop over all fronts from 1 to lastFronIdx
         nsols = length(obj.F{1,f});
         F_Rt = zeros(nsols,obj.problem.m); %Rt for solutions of F
@@ -16,7 +26,7 @@ function [newParentPopIdxs, newParentPop, distances] = getCrowdingDistances(obj,
             for i = 2:nsols-1 %loop over sortedIdx
                 di(sortedIdx(i)) = di(sortedIdx(i)) + ...
                 (F_Rt(sortedIdx(i+1),m) - F_Rt(sortedIdx(i-1),m))/...
-                    (F_Rt(sortedIdx(nsols),m) - F_Rt(sortedIdx(1),m));
+                    (fmax(m) - fmin(m));
             end
         end
         [diVals_sorted,dsorted] = sort(di,'descend');
