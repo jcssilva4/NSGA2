@@ -1,19 +1,19 @@
 function  Qt = getOffspring(obj)
-    Qt = cell(1,obj.N);
+    Qt = zeros(obj.N,obj.problem.nVars);
     i = 1;
     %fprintf('\nCrossover')
     if(obj.pX > 0) %is there a Xover chance?
         while(i <= obj.N)
             if(rand() <= obj.pX) %crossover will happen
-                [Qt{1,i}, Qt{1,i+1}] = Xoperator(obj, ...
-                    obj.Mpool{1,i}.binString, obj.Mpool{1,i+1}.binString);
+                [Qt(i,:), Qt(i+1,:)] = Xoperator(obj, obj.Pt(i,:), obj.Pt(i+1,:));
             else %simply copy parents
-                Qt{1,i} = obj.Mpool{1,i};
-                Qt{1,i+1} = obj.Mpool{1,i+1};
+                Qt(i,:) = obj.Mpool(i,:);
+                Qt(i+1,:) = obj.Mpool(i+1,:);
             end
             i = i + 2;
         end
     end
+    %{
     if(obj.pM > 0) %is there a mutation chance?
         %fprintf('\nMutation')
         L = 1; %auxiliar for the mutation clock operator (this cannot be reseted)
@@ -30,4 +30,5 @@ function  Qt = getOffspring(obj)
             end
         end
     end
+    %}
 end

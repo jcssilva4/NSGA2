@@ -1,7 +1,7 @@
 %Validating real coded NSGA2...
 clear
 clc
-%addpath([pwd '\BIN\']); copy: crowdingDistances and P0nondominatedsorting 
+%addpath([pwd '\BIN\']); copy: c
 addpath([pwd '\REAL\']);
 fprintf('\n=== Starting Constrained NSGA2 test ===\n')
 
@@ -9,7 +9,7 @@ fprintf('\n=== Starting Constrained NSGA2 test ===\n')
 nVars = 2;
 problem = Problem([-1 -1], nVars);
 %set real coded NSGA-II parameters
-nGenerations = 1;
+nGenerations = 500;
 nIndividuals = 40;
 pX = 0.9; %crossover probability
 Nc = 20; %distribution index for Xoperator
