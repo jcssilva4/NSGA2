@@ -1,5 +1,4 @@
-%Constraint Handling (using constrain-domination)validation...
-%VALIDATED!
+%Validating real coded NSGA2...
 clear
 clc
 addpath([pwd '\BIN\']);
